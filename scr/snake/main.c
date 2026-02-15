@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <conio.h>
 
 #define true 1
 
 #define LENGTH_SCREEN 12
 #define HIGHT_SCREEN 12
 
-#define AIR '.'
+#define AIR ' '
 #define WALL '#'
 #define ENDLINE '\n'
 
@@ -42,29 +43,47 @@ void time_line(void)
     for(int i = 0; i < HIGHT_SCREEN; ++i){
         for(int j = 0; j < LENGTH_SCREEN; ++j)
             printf("%c ", screen[i][j]);
-            printf("\n");
+        printf("%c", ENDLINE);
     }
     /*for(int i = 0; i < HIGHT_SCREEN; ++i) //another output
         printf("%s\n", screen[i]);*/
     Sleep(200);
 }
 
-/*struct obj_snake
+void controlling(short *direction)
 {
-    int length_snake = 1;
-    short direction_view = LEFT;
+    switch(getch())
+    {
+        case 'a': *direction = LEFT;
+            break;
+        case 'w': *direction = UP;
+            break;
+        case 'd': *direction = RIGHT;
+            break;
+        case 's': *direction = DOWN;
+            break;
+    }
+}
 
-    int snake_position_x = LENGTH_SCREEN/2;
-    int snake_position_y = HIGHT_SCREEN/2;
+struct objSnake
+{
+    int length_snake;
+    short direction_view;
+
+    int snake_position_x;
+    int snake_position_y;
 
 
-};*/
+};
 
 int main()
 {
     generate_map();
+    struct objSnake snake = {1, RIGHT, LENGTH_SCREEN/2, HIGHT_SCREEN/2};;
 
     while(true){
+        controlling(&snake.direction_view);
+        printf("%d", snake.direction_view);
         time_line();
     }
 
